@@ -71,3 +71,5 @@ The Entity Relationship Diagram and Component Hierarchy Diagram I used to develo
 **Logo Designed Using:** [Canva](https://www.canva.com/)
 
 **Nutrients API:** [EDAMAM](https://developer.edamam.com/edamam-docs-nutrition-api)
+
+**Token Based Auhentication Tutorial** [MonkHaus](https://www.youtube.com/watch?v=LXV4wn8scvM&t=2884s)
