@@ -21,7 +21,7 @@ class Profile(models.Model):
     keto_weeks = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.user
+        return str(self.user.username)
 
 
 class Day(models.Model):
@@ -31,7 +31,7 @@ class Day(models.Model):
     date = models.DateField(("Date"), default=datetime.date.today)
 
     def __str__(self):
-        return str(f'{self.date.month}/{self.date.day}/{self.date.year}')
+        return str(f'{self.user} - {self.date.month}/{self.date.day}/{self.date.year}')
 
 
 class Meal(models.Model):
@@ -41,11 +41,12 @@ class Meal(models.Model):
     name = models.CharField(max_length=25, default="Breakfast")
 
     def __str__(self):
-        return self.name
+        # return self.name
+        return str(f'{self.day} - {self.name}')
 
 
 class Food(models.Model):
-    meal = models.ManyToManyField(
+    meals = models.ManyToManyField(
         Meal, related_name="food_list", blank=True
     )
     name = models.CharField(max_length=100)
