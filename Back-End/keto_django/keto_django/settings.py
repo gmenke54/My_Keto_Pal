@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'corsheaders',
-    'keto'
+    'keto',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +65,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'keto_django.urls'
+
+#
+AUTH_USER_MODEL = 'keto.User'
+#
 
 TEMPLATES = [
     {
@@ -90,8 +94,11 @@ WSGI_APPLICATION = 'keto_django.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'keto',
+        'USER': 'ketouser',
+        'PASSWORD': 'keto',
+        'HOST': 'localhost'
     }
 }
 

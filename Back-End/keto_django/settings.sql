@@ -1,0 +1,4 @@
+-- settings.sql
+CREATE DATABASE keto;
+CREATE USER ketouser2 WITH PASSWORD 'keto';
+GRANT ALL PRIVILEGES ON DATABASE keto TO ketouser2;
