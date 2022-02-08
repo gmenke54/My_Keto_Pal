@@ -1,5 +1,7 @@
 # from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .serializers import ProfileSerializer, DaySerializer, MealSerializer, FoodSerializer
 from .models import Profile, Day, Meal, Food
 
@@ -22,6 +24,14 @@ class DayList(generics.ListCreateAPIView):
 class DayDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Day.objects.all()
     serializer_class = DaySerializer
+
+
+# class GetDayByUser(APIView):
+#     queryset = Day.objects.all()
+
+#     def get(request):
+#         print(request.data)
+#         return Response
 
 
 class MealList(generics.ListCreateAPIView):

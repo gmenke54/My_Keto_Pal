@@ -9,7 +9,8 @@ export default createStore({
     user: {
       id: null,
       email: null
-    }
+    },
+    day: null
   },
   mutations: {
     initializeStore(state) {
@@ -35,6 +36,9 @@ export default createStore({
     },
     setProfile(state, payload) {
       state.profile = payload;
+    },
+    setDay(state, payload) {
+      state.day = payload;
     }
   },
   actions: {

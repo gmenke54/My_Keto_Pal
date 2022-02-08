@@ -11,5 +11,6 @@ urlpatterns = [
     path('meals/', views.MealList.as_view(), name='meal_list'),
     path('meals/<int:pk>', views.MealDetail.as_view(), name='meal_detail'),
     path('foods/', views.FoodList.as_view(), name='food_list'),
-    path('foods/<int:pk>', views.FoodDetail.as_view(), name='food_detail')
+    path('foods/<int:pk>', views.FoodDetail.as_view(), name='food_detail'),
+    # path('day/<int:user>', views.GetDayByUser.as_view(), name='get_day')
 ]
