@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="nav">
-      <router-link to="/">myketopal</router-link>
-      <router-link to="/signup">Sign Up</router-link> 
-      <router-link to="/signin">Login</router-link>
-      <router-link to="/profile">My Profile</router-link>
-      <div class="a" @click="logout">Logout</div>
+      <router-link v-if="this.$store.state.isAuthenticated" to="/">myketopal</router-link>
+      <router-link v-if="this.$store.state.isAuthenticated" to="/profile">Profile</router-link>
+      <router-link v-if="this.$store.state.isAuthenticated === false" to="/signup">Sign Up</router-link> 
+      <router-link v-if="this.$store.state.isAuthenticated === false" to="/signin">Login</router-link>
+      <div v-if="this.$store.state.isAuthenticated" class="a" @click="logout">Logout</div>
     </div>
     <router-view/>
   </div>
@@ -57,6 +57,10 @@ export default {
   text-align: center;
   background-color: #F0F2F4;
   height: 100vh;
+}
+
+body{
+  margin: 0
 }
 
 a, .a{
