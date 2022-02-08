@@ -7,7 +7,7 @@
         <DayCard :date="this.day" />
       </div>
       <div v-if="this.$store.state.day">
-        display day
+        show day
       </div>
       <div v-else>
         log some food
@@ -30,7 +30,7 @@ export default {
   components: {
     Calendar,
     DatePicker,
-    DayCard
+    DayCard,
   },
   data() {
     return {
