@@ -2,7 +2,8 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/signup">Sign Up</router-link> | 
-    <router-link to="/signin">Login</router-link>
+    <router-link to="/signin">Login</router-link> |
+    <router-link to="/profile">My Profile</router-link>
     <div @click="logout">Logout</div>
     <router-view/>
   </div>
@@ -21,6 +22,7 @@ export default {
     } else {
       axios.defaults.headers.common['Authorization'] = ''
     }
+    this.$store.dispatch('setUserId')
   },
   methods: {
     logout(){
@@ -33,6 +35,8 @@ export default {
             localStorage.setItem("token", '')
             axios.defaults.headers.common['Authorization'] = ''
             this.$router.push('/signin')
+            this.$store.commit('setUser', {id:null, email:null})
+            this.$store.commit('setProfile', null)
           })
           .catch(error => {
             console.log(error)
