@@ -1,10 +1,12 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/signup">Sign Up</router-link> | 
-    <router-link to="/signin">Login</router-link> |
-    <router-link to="/profile">My Profile</router-link>
-    <div @click="logout">Logout</div>
+  <div>
+    <div class="nav">
+      <router-link to="/">myketopal</router-link>
+      <router-link to="/signup">Sign Up</router-link> 
+      <router-link to="/signin">Login</router-link>
+      <router-link to="/profile">My Profile</router-link>
+      <div class="a" @click="logout">Logout</div>
+    </div>
     <router-view/>
   </div>
 
@@ -53,19 +55,33 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background-color: #F0F2F4;
+  height: 100vh;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+a, .a{
+  text-decoration: none;
+  color: #2c3e50;
+  &.router-link-exact-active {
+    color: #0166EE;
   }
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 8px 12px;
+  background-color: white;
+}
+
+a:hover, .a:hover {
+  background-color: rgb(233, 233, 233);
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 5px 0 5px 0;
+  font-weight: bold;
+  background-color: white;
+  border-bottom: 0.5px solid #E7E9EB;
 }
 </style>

@@ -4,7 +4,7 @@
       <div v-if="this.$store.state.profile">
         <img :src="this.$store.state.profile.img" class="pic" alt="profile picture">
         <div>{{this.$store.state.user.email}}</div>
-        <div @dblclick="togDisplay">
+        <div @dblclick="togDisplay" class="click">
           <div v-if="displayForm">
             <form @submit.prevent="updateWeight">
               <input type="number" name="newWeight" :placeholder="this.$store.state.profile.cur_weight" v-model="newWeight"/>
@@ -14,9 +14,10 @@
           <div v-else>Current Weight: {{this.$store.state.profile.cur_weight}}</div>
           </div>
         <div>Goal Weight: {{this.$store.state.profile.goal_weight}}</div>
+        <div class="btn" @click="delProfile">Clear Profile</div>
       </div>
       <div v-else>
-
+        <AddProfile/>
       </div>
     </div>
     <div v-else>
@@ -26,8 +27,8 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import axios from 'axios'
+import AddProfile from '@/components/AddProfile.vue'
 
 export default {
   name: 'Profile',
@@ -35,6 +36,9 @@ export default {
     newWeight: null,
     displayForm: false
   }),
+  components: {
+    AddProfile
+  },
   methods: {
     togDisplay(){
       console.log('displaying')
@@ -52,21 +56,42 @@ export default {
       this.newWeight = null
       this.$store.dispatch('setUserId')
       this.displayForm=false
+    },
+    async delProfile(){
+      const id = this.$store.state.user.id
+      await axios.delete(`http://127.0.0.1:8000/profiles/${id}`)
     }
   }
-  // data: () => ({
-  //   profile = this.$store.state.profile
-  // }),
-  // computed(){
-  //   this.
-  // }
 }
 </script>
 
 <style scoped>
+.profile{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .pic{
   height: 200px;
   border: 2px solid rgb(68, 133, 170);
   border-radius: 300px
 }
+.click{
+  cursor: pointer;
+}
+.btn{
+  cursor: pointer;
+  background-color: #0166EE;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 10px 60px;
+  border-radius: 5px;
+  width: 30vw
+}
+
+.btn:hover{
+  background-color: #0048e2;
+}
+
 </style>
