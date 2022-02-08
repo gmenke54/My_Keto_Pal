@@ -2,7 +2,10 @@
   <div class="profile">
     <div v-if="this.$store.state.isAuthenticated">
       <div v-if="this.$store.state.profile">
-        <img :src="this.$store.state.profile.img" class="pic" alt="profile picture">
+        <div class="pic-cont">
+          <img @mouseover="dispEdit=true" @mouseleave="dispEdit=false" :src="this.$store.state.profile.img" class="pic" alt="profile picture">
+          <div v-if="dispEdit" class="edit">click to edit</div>
+        </div>
         <div>{{this.$store.state.user.email}}</div>
         <div @dblclick="togDisplay" class="click">
           <div v-if="displayForm">
@@ -34,7 +37,8 @@ export default {
   name: 'Profile',
   data: ()=>({
     newWeight: null,
-    displayForm: false
+    displayForm: false,
+    dispEdit: false
   }),
   components: {
     AddProfile
@@ -71,9 +75,23 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
+.pic-cont{
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.edit{
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .pic{
   height: 200px;
-  border: 2px solid rgb(68, 133, 170);
+  border: 2px solid #0166EE;
   border-radius: 300px
 }
 .click{

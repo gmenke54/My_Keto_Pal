@@ -83,5 +83,6 @@ a:hover, .a:hover {
   font-weight: bold;
   background-color: white;
   border-bottom: 0.5px solid #E7E9EB;
+  margin-bottom: 10px;
 }
 </style>
