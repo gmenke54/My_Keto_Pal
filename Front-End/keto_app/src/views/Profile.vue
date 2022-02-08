@@ -6,7 +6,7 @@
           <img @mouseover="dispEdit=true" @mouseleave="dispEdit=false" :src="this.$store.state.profile.img" class="pic" alt="profile picture">
           <div v-if="dispEdit" class="edit">click to edit</div>
         </div>
-        <!-- <div>{{}}</div> -->
+        <div class="name">{{ this.$store.state.profile.name}}</div>
         <div>{{this.$store.state.user.email}}</div>
         <div @dblclick="togDisplay" class="click">
           <div v-if="displayForm">
@@ -109,9 +109,10 @@ export default {
   border-radius: 5px;
   width: 30vw
 }
-
 .btn:hover{
   background-color: #0048e2;
 }
-
+.name{
+  font-weight: 600
+}
 </style>
