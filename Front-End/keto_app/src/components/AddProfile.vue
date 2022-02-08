@@ -93,9 +93,9 @@ export default {
   background-color: #0048e2;
 }
 
-input{
+/* input{
   width: 200px;
-}
+} */
 
 .slide{
   font-size: 19px;
