@@ -22,6 +22,7 @@ class Profile(models.Model):
     goal_weight = models.FloatField(null=True)
     img = models.TextField(null=True)
     keto_weeks = models.IntegerField(null=True)
+    name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return str(self.user.username)

@@ -6,6 +6,7 @@
           <img @mouseover="dispEdit=true" @mouseleave="dispEdit=false" :src="this.$store.state.profile.img" class="pic" alt="profile picture">
           <div v-if="dispEdit" class="edit">click to edit</div>
         </div>
+        <!-- <div>{{}}</div> -->
         <div>{{this.$store.state.user.email}}</div>
         <div @dblclick="togDisplay" class="click">
           <div v-if="displayForm">
@@ -64,6 +65,7 @@ export default {
     async delProfile(){
       const id = this.$store.state.user.id
       await axios.delete(`http://127.0.0.1:8000/profiles/${id}`)
+      this.$router.go()
     }
   }
 }

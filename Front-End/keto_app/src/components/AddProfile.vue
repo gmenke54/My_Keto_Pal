@@ -30,8 +30,9 @@
         </div>
       </div>
       <div class="slide" v-if="slide===5">
-        <div>Please submit a current profile picture:</div>
-        <input type="text" name="img" placeholder="Profile picture url" v-model="img"/>
+        <div>Please provide some more information:</div>
+        <input type="text" name="name" placeholder="Full Name" v-model="name"/>
+        <input type="text" name="img" placeholder="Profile Picture URL" v-model="img"/>
         <div class="btnBar">
           <div class="btn hollow" @click="slide--">back</div>
           <div class="btn" @click="submit">submit</div>
@@ -50,7 +51,8 @@ export default {
     cur_weight: null,
     goal_weight: null,
     keto_weeks: null,
-    img: null
+    img: null,
+    name: null
   }),
   methods: {
     async submit(){
@@ -60,10 +62,11 @@ export default {
         cur_weight: this.cur_weight,
         goal_weight: this.goal_weight,
         img: this.img,
-        keto_weeks: this.keto_weeks
+        keto_weeks: this.keto_weeks,
+        name: this.name
       }
       const res = await axios.post('http://127.0.0.1:8000/profiles/', newProf)
-      // make page reload here!!!
+      this.$router.go()
     }
   }
 }

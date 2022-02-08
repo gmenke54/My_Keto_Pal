@@ -1,59 +1,6 @@
 from rest_framework import serializers
 from .models import User, Profile, Day, Meal, Food
 
-# BROKEN:
-# class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-#     days = serializers.HyperlinkedRelatedField(
-#         view_name='day_detail',
-#         many=True,
-#         read_only=True
-#     )
-
-#     profile_url = serializers.ModelSerializer.serializer_url_field(
-#         view_name='profile_detail'
-#     )
-
-#     user = serializers.HyperlinkedRelatedField(
-#         view_name='user_detail',
-#         read_only=True
-#     )
-
-#     user_id = serializers.PrimaryKeyRelatedField(
-#         queryset=User.objects.all(),
-#         source='user'
-#     )
-
-#     class Meta:
-#         model = Profile
-#         fields = ('id', 'profile_url', 'user', 'user_id', 'cur_weight',
-#                   'goal_weight', 'img', 'keto_weeks', 'days', )
-
-
-# class DaySerializer(serializers.HyperlinkedModelSerializer):
-#     meals = serializers.HyperlinkedRelatedField(
-#         view_name='meal_detail',
-#         many=True,
-#         read_only=True
-#     )
-
-#     day_url = serializers.ModelSerializer.serializer_url_field(
-#         view_name='day_detail'
-#     )
-
-#     user = serializers.HyperlinkedRelatedField(
-#         view_name='user_detail',
-#         read_only=True
-#     )
-
-#     user_id = serializers.PrimaryKeyRelatedField(
-#         queryset=User.objects.all(),
-#         source='user'
-#     )
-
-#     class Meta:
-#         model = Day
-#         fields = ('id', 'day_url', 'user', 'user_id', 'date', 'meals', )
-
 
 class DaySerializer(serializers.ModelSerializer):
     meals = serializers.PrimaryKeyRelatedField(
@@ -64,11 +11,6 @@ class DaySerializer(serializers.ModelSerializer):
     day_url = serializers.ModelSerializer.serializer_url_field(
         view_name='day_detail'
     )
-
-    # user = serializers.HyperlinkedRelatedField(
-    #     view_name='user_detail',
-    #     read_only=True
-    # )
 
     user_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
@@ -81,20 +23,11 @@ class DaySerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # days = serializers.PrimaryKeyRelatedField(
-    #     queryset=Day.objects.all(),
-    #     many=True,
-    # )
     days = DaySerializer(many=True, read_only=True)
 
     profile_url = serializers.ModelSerializer.serializer_url_field(
         view_name='profile_detail'
     )
-
-    # user = serializers.HyperlinkedRelatedField(
-    #     view_name='user_detail',
-    #     read_only=True
-    # )
 
     user_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
@@ -104,7 +37,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('days', 'user', 'profile_url', 'user_id', 'cur_weight',
-                  'goal_weight', 'img', 'keto_weeks',)
+                  'goal_weight', 'img', 'keto_weeks', 'name', )
 
 # Working:
 
