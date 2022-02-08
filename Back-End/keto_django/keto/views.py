@@ -2,8 +2,8 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProfileSerializer, DaySerializer, MealSerializer, FoodSerializer
-from .models import Profile, Day, Meal, Food
+from .serializers import ProfileSerializer, DaySerializer, FoodSerializer
+from .models import Profile, Day, Food
 
 
 class ProfileList(generics.ListCreateAPIView):
@@ -34,14 +34,14 @@ class DayDetail(generics.RetrieveUpdateDestroyAPIView):
 #         return Response
 
 
-class MealList(generics.ListCreateAPIView):
-    queryset = Meal.objects.all()
-    serializer_class = MealSerializer
+# class MealList(generics.ListCreateAPIView):
+#     queryset = Meal.objects.all()
+#     serializer_class = MealSerializer
 
 
-class MealDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Meal.objects.all()
-    serializer_class = MealSerializer
+# class MealDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Meal.objects.all()
+#     serializer_class = MealSerializer
 
 
 class FoodList(generics.ListCreateAPIView):
