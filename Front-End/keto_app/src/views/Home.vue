@@ -2,7 +2,7 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <DatePicker mode="date" v-model="date"/>
-      <div>
+      <div class="day-card">
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
           <DayCard :date="this.day" />
@@ -80,9 +80,15 @@ export default {
 .cont{
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-start;
 }
 .day-head{
   font-weight: 600
+}
+.day-card{
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid rgb(214, 214, 214)
 }
 </style>

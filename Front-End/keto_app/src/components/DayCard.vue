@@ -1,5 +1,5 @@
 <template>
-  <div class="day-card">
+  <div>
   </div>
 </template>
 
