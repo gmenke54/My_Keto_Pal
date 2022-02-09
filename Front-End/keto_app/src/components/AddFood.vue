@@ -25,19 +25,17 @@ export default {
     async postFood(){
       let res = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
       let nutrients = res.data
-      // console.log(nutrients)
       let curDay = this.$store.state.day
       if (curDay === null){
-        console.log('posting a new day')
+        // console.log('posting a new day')
         const res = await axios.post(`http://127.0.0.1:8000/days/`, {
           user_id: this.$store.state.user.id,
           date: this.date,
           food_list: []
         })
-        // console.log(res)
         curDay = res.data
       }
-      console.log(curDay.id) 
+      // console.log(curDay.id) 
       let transf = 0.0
       try {
         transf = nutrients.totalNutrients.FATRN.quantity
@@ -45,7 +43,6 @@ export default {
         transf = 0.0
       }
       let foodObj = {
-        // need to change this to adapt to whether day exists or is newly posted
         days: [curDay.id],
 		    name: this.newFood,
 		    weight: nutrients.totalWeight,
@@ -63,11 +60,17 @@ export default {
 		    chol_dv: nutrients.totalNutrients.CHOLE.quantity,
 		    sodium_dv: nutrients.totalNutrients.NA.quantity
       }
-
       let response = await axios.post(`http://127.0.0.1:8000/foods/`, foodObj)
-      const newItem = response.data
+      let resp = await axios.get('http://127.0.0.1:8000/days')
+      console.log(resp.data)
+      let id = this.$store.state.user.id
+      const result = resp.data.filter(day => day.user_id===id && day.date===this.date)
+      console.log(result[0])
+      this.$store.commit('setDay', result[0])
+      // const newItem = response.data
       // need to push newItem onto the end of the food list stored in global state
       // make axios to gte current day again
+      
       // this.$store.commit('setDay', res)
       // console.log(response)
       this.dispBtn=true
