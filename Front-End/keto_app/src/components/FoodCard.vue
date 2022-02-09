@@ -1,10 +1,10 @@
 <template>
-  <div class="food-card">
+  <div class="food-card" @mouseover="setLabel">
     <div class="food-line" v-if="dispUpdate===false" @dblclick="updateFood" >{{food.name}} | Carbs: {{food.carbs.toFixed(1)}}</div>
     <div v-if="dispUpdate===false" @click="delFood" class="btn">-</div>
     <div v-if="dispUpdate">
       <form @submit.prevent="postFood">
-        <input type="text" name="newFood" v-model="newFood" :placeholder="food.name">
+        <input type="text" name="newFood" v-model="newFood" :placeholder="placeholder">
         <button type="submit">Update</button>
       </form>
     </div>
@@ -20,9 +20,17 @@ export default {
   },
   data: ()=> ({
     dispUpdate: false,
-    newFood: null
+    newFood: null,
   }),
+  computed:{
+    placeholder(){
+      return this.food.name
+    }
+  },
   methods: {
+    setLabel(){
+      this.$store.commit("setFood", this.food)
+    },
     async delFood(){
       console.log(this.food.id)
       await axios.delete(`http://127.0.0.1:8000/foods/${this.food.id}`)
@@ -47,7 +55,8 @@ export default {
       } catch {
         transf = 0.0
       }
-      let foodObj = {
+      try {
+        let foodObj = {
         days: [this.$store.state.day.id],
 		    name: this.newFood,
 		    weight: nutrients.totalWeight,
@@ -75,6 +84,12 @@ export default {
       this.$store.commit('setDay', result[0])
       this.newFood = null
       this.dispUpdate=false
+      } catch {
+        this.placeholder = "unknown food - try again"
+        this.newFood= null
+        console.log('caught error')
+      }
+
     }
   }
 }

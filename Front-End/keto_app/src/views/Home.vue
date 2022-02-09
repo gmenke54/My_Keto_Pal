@@ -2,6 +2,7 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <DatePicker mode="date" v-model="date"/>
+      <Label />
       <div class="day-card">
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
@@ -25,6 +26,7 @@ import 'v-calendar/dist/style.css';
 import DayCard from '../components/DayCard.vue'
 import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
+import Label from '../components/Label.vue'
 
 export default {
   name: 'Home',
@@ -33,7 +35,8 @@ export default {
     DatePicker,
     DayCard,
     MainDay,
-    AddFood
+    AddFood,
+    Label
   },
   data() {
     return {

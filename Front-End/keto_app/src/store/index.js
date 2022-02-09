@@ -10,7 +10,25 @@ export default createStore({
       id: null,
       email: null
     },
-    day: null
+    day: null,
+    food: {
+      days: [],
+      name: 'Hover over a food to see details',
+      weight: 0.0,
+      carbs: 0.0,
+      calories: 0.0,
+      fat: 0.0,
+      protein: 0.0,
+      sugar: 0.0,
+      fiber: 0.0,
+      saturated: 0.0,
+      trans: 0.0,
+      chol: 0.0,
+      sodium: 0.0,
+      added_sugar: 0.0,
+      chol_dv: 0.0,
+      sodium_dv: 0.0
+    }
   },
   mutations: {
     initializeStore(state) {
@@ -39,6 +57,9 @@ export default createStore({
     },
     setDay(state, payload) {
       state.day = payload;
+    },
+    setFood(state, payload) {
+      state.food = payload;
     }
   },
   actions: {

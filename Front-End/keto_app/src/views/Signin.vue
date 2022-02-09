@@ -12,10 +12,7 @@
 
 <script>
 import axios from 'axios'
-
-
 export default {
-
   name: 'Signin',
   data: () => ({
     username: '',
