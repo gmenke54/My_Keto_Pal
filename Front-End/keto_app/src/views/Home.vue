@@ -10,7 +10,7 @@
         <div v-if="this.$store.state.day">
           <MainDay />
         </div>
-          <AddFood />
+          <AddFood :date="this.day"/>
       </div>
     </div>
     <div v-else>
@@ -43,8 +43,10 @@ export default {
   computed: {
     day(){
       // return this.date.toISOString().slice(0,10)
-      let date =  this.date.toLocaleString('en-US').slice(0,8)
-      let splitArr = date.split("/")
+      let date =  this.date.toLocaleString('en-US').slice(0,9)
+      console.log(date)
+      let newDate = date.replace(',', '')
+      let splitArr = newDate.split("/")
       let month = ''
       let day = ''
       if (splitArr[0].length === 1){

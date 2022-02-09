@@ -18,16 +18,35 @@ export default {
     dispBtn: true,
     newFood: null
   }),
+  props: {
+    date: String
+  },
   methods: {
     async postFood(){
       let res = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
       let nutrients = res.data
-      console.log(nutrients)
-      console.log(this.$store.state.day.id)
-      // need to check to see if day===null; if so need to post a day first 
+      // console.log(nutrients)
+      let curDay = this.$store.state.day
+      if (curDay === null){
+        console.log('posting a new day')
+        const res = await axios.post(`http://127.0.0.1:8000/days/`, {
+          user_id: this.$store.state.user.id,
+          date: this.date,
+          food_list: []
+        })
+        // console.log(res)
+        curDay = res.data
+      }
+      console.log(curDay.id) 
+      let transf = 0.0
+      try {
+        transf = nutrients.totalNutrients.FATRN.quantity
+      } catch {
+        transf = 0.0
+      }
       let foodObj = {
         // need to change this to adapt to whether day exists or is newly posted
-        days: [this.$store.state.day.id],
+        days: [curDay.id],
 		    name: this.newFood,
 		    weight: nutrients.totalWeight,
 		    carbs: nutrients.totalNutrients.CHOCDF.quantity,
@@ -37,7 +56,7 @@ export default {
 		    sugar: nutrients.totalNutrients.SUGAR.quantity,
 		    fiber: nutrients.totalNutrients.FIBTG.quantity,
 		    saturated: nutrients.totalNutrients.FASAT.quantity,
-		    trans: nutrients.totalNutrients.FATRN.quantity,
+		    trans: transf,
 		    chol: nutrients.totalNutrients.CHOLE.quantity,
 		    sodium: nutrients.totalNutrients.NA.quantity,
 		    added_sugar: 0.0,
@@ -48,7 +67,9 @@ export default {
       let response = await axios.post(`http://127.0.0.1:8000/foods/`, foodObj)
       const newItem = response.data
       // need to push newItem onto the end of the food list stored in global state
-      console.log(response)
+      // make axios to gte current day again
+      // this.$store.commit('setDay', res)
+      // console.log(response)
       this.dispBtn=true
     }
   }
