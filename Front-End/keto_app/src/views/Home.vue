@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
-      <DatePicker v-model="date"/>
+      <DatePicker mode="date" v-model="date"/>
       <div>
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
@@ -43,10 +43,28 @@ export default {
   },
   computed: {
     day(){
-      return this.date.toISOString().slice(0,10)
+      // return this.date.toISOString().slice(0,10)
+      let date =  this.date.toLocaleString('en-US').slice(0,8)
+      let splitArr = date.split("/")
+      let month = ''
+      let day = ''
+      if (splitArr[0].length === 1){
+        month = `0${splitArr[0]}`
+      } else{
+        month = `${splitArr[0]}`
+      }
+      if (splitArr[1].length === 1){
+        day = `0${splitArr[1]}`
+      } else {
+        day = `${splitArr[1]}`
+      }
+      let finalDate = `${splitArr[2]}-${month}-${day}`
+      console.log(finalDate)
+      return finalDate
     },
     header(){
-      return this.date.toString().slice(0,15)
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+      return this.date.toLocaleString('en-US', options)
     }
   },
   methods: {

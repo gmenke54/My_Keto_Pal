@@ -20,26 +20,29 @@ export default {
   }),
   methods: {
     async postFood(){
-      let nutrients = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
+      let res = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
+      let nutrients = res.data
       console.log(nutrients)
-      // let foodObj = {
-      //   days: [],
-		  //   name: "Test",
-		  //   weight: 0.0,
-		  //   carbs: 1.0,
-		  //   calories: 0.0,
-	    // 	 fat: 0.0,
-		  //   protein: 0.0,
-		  //   sugar: 0.0,
-		  //   fiber: 0.0,
-		  //   saturated: 0.0,
-		  //   "trans": 0.0,
-		  //   "chol": 0.0,
-		  //   "sodium": 0.0,
-		  //   "added_sugar": 4.0,
-		  //   "chol_dv": 0.0,
-		  //   "sodium_dv": 0.0
-      // }
+      console.log(this.$store.state.day.id)
+      let foodObj = {
+        days: [this.$store.state.day.id],
+		    name: this.newFood,
+		    weight: nutrients.totalWeight,
+		    carbs: nutrients.totalNutrients.CHOCDF.quantity,
+		    calories: nutrients.calories,
+	    	fat: nutrients.totalNutrients.FAT.quantity,
+		    protein: nutrients.totalNutrients.PROCNT.quantity,
+		    sugar: nutrients.totalNutrients.SUGAR.quantity,
+		    fiber: nutrients.totalNutrients.FIBTG.quantity,
+		    saturated: nutrients.totalNutrients.FASAT.quantity,
+		    trans: nutrients.totalNutrients.FATRN.quantity,
+		    chol: nutrients.totalNutrients.CHOLE.quantity,
+		    sodium: nutrients.totalNutrients.NA.quantity,
+		    added_sugar: 0.0,
+		    chol_dv: nutrients.totalNutrients.CHOLE.quantity,
+		    sodium_dv: nutrients.totalNutrients.NA.quantity
+      }
+      console.log(foodObj)
       this.dispBtn=true
     }
   }
