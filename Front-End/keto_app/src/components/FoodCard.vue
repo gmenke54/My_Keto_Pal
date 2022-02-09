@@ -71,8 +71,8 @@ export default {
 		    chol: nutrients.totalNutrients.CHOLE.quantity,
 		    sodium: nutrients.totalNutrients.NA.quantity,
 		    added_sugar: 0.0,
-		    chol_dv: nutrients.totalNutrients.CHOLE.quantity,
-		    sodium_dv: nutrients.totalNutrients.NA.quantity
+		    chol_dv: nutrients.totalDaily.CHOLE.quantity,
+		    sodium_dv: nutrients.totalDaily.NA.quantity
       }
       let response = await axios.post(`http://127.0.0.1:8000/foods/`, foodObj)
       this.delFood()
