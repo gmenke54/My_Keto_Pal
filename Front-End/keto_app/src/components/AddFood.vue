@@ -3,7 +3,7 @@
     <div v-if="dispBtn" @click="dispBtn=false" class="btn">Log Food</div>
     <div v-if="dispBtn===false">
       <form @submit.prevent="postFood">
-        <input type="text" name="newFood" v-model="newFood" placeholder="1 cup cheddar cheese">
+        <input type="text" name="newFood" v-model="newFood" :placeholder="placeholder">
         <button type="submit">Add</button>
       </form>
     </div>
@@ -16,7 +16,8 @@ export default {
   name: 'AddFood',
   data: ()=> ({
     dispBtn: true,
-    newFood: null
+    newFood: null,
+    placeholder: "1 cup cheddar cheese"
   }),
   props: {
     date: String
@@ -40,7 +41,9 @@ export default {
       } catch {
         transf = 0.0
       }
-      let foodObj = {
+
+      try {
+        let foodObj = {
         days: [curDay.id],
 		    name: this.newFood,
 		    weight: nutrients.totalWeight,
@@ -66,7 +69,13 @@ export default {
       console.log(result[0])
       this.$store.commit('setDay', result[0])
       this.newFood = null
+      this.placeholder = "1 cup cheddar cheese"
       this.dispBtn=true
+      } catch {
+        this.placeholder = "unknown food - try again"
+        this.newFood= null
+        console.log('caught error')
+      }
     }
   }
 }
