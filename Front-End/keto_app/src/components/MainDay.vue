@@ -3,7 +3,7 @@
     <div :key="food.id" v-for="food in this.$store.state.day.food_list">
       <FoodCard  :food="food" />
     </div>
-    <div>Total Daily Carbs: {{carbs}}</div>
+    <div class="total">Total Daily Carbs: {{carbs.toFixed(1)}}</div>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
     FoodCard
   },
   data:()=> ({
-    carbs: null
+    carbs: 0.0
   }),
   mounted(){
     this.countCarbs()
@@ -36,3 +36,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.total{
+  font-weight: 600;
+}
+</style>

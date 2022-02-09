@@ -82,4 +82,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 }
+.day-head{
+  font-weight: 600
+}
 </style>

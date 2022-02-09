@@ -27,7 +27,6 @@ export default {
       let nutrients = res.data
       let curDay = this.$store.state.day
       if (curDay === null){
-        // console.log('posting a new day')
         const res = await axios.post(`http://127.0.0.1:8000/days/`, {
           user_id: this.$store.state.user.id,
           date: this.date,
@@ -35,7 +34,6 @@ export default {
         })
         curDay = res.data
       }
-      // console.log(curDay.id) 
       let transf = 0.0
       try {
         transf = nutrients.totalNutrients.FATRN.quantity
