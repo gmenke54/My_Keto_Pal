@@ -24,7 +24,9 @@ export default {
       let nutrients = res.data
       console.log(nutrients)
       console.log(this.$store.state.day.id)
+      // need to check to see if day===null; if so need to post a day first 
       let foodObj = {
+        // need to change this to adapt to whether day exists or is newly posted
         days: [this.$store.state.day.id],
 		    name: this.newFood,
 		    weight: nutrients.totalWeight,
@@ -42,7 +44,11 @@ export default {
 		    chol_dv: nutrients.totalNutrients.CHOLE.quantity,
 		    sodium_dv: nutrients.totalNutrients.NA.quantity
       }
-      console.log(foodObj)
+
+      let response = await axios.post(`http://127.0.0.1:8000/foods/`, foodObj)
+      const newItem = response.data
+      // need to push newItem onto the end of the food list stored in global state
+      console.log(response)
       this.dispBtn=true
     }
   }
