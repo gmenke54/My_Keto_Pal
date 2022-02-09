@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'AddFood',
   data: ()=> ({
@@ -20,9 +20,26 @@ export default {
   }),
   methods: {
     async postFood(){
-      console.log('posting food')
-      // if I get an error, try unsetting then resetting the auth header and the default base url
-      nutrients = await axios.get(``)
+      let nutrients = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
+      console.log(nutrients)
+      // let foodObj = {
+      //   days: [],
+		  //   name: "Test",
+		  //   weight: 0.0,
+		  //   carbs: 1.0,
+		  //   calories: 0.0,
+	    // 	 fat: 0.0,
+		  //   protein: 0.0,
+		  //   sugar: 0.0,
+		  //   fiber: 0.0,
+		  //   saturated: 0.0,
+		  //   "trans": 0.0,
+		  //   "chol": 0.0,
+		  //   "sodium": 0.0,
+		  //   "added_sugar": 4.0,
+		  //   "chol_dv": 0.0,
+		  //   "sodium_dv": 0.0
+      // }
       this.dispBtn=true
     }
   }
