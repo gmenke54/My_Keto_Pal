@@ -38,17 +38,6 @@ class Day(models.Model):
         return str(f'{self.user} - {self.date.month}/{self.date.day}/{self.date.year}')
 
 
-# class Meal(models.Model):
-#     day = models.ForeignKey(
-#         Day, on_delete=models.CASCADE, related_name='meals'
-#     )
-#     name = models.CharField(max_length=25, default="Breakfast")
-
-#     def __str__(self):
-#         # return self.name
-#         return str(f'{self.day} - {self.name}')
-
-
 class Food(models.Model):
     days = models.ManyToManyField(
         Day, related_name="food_list", blank=True

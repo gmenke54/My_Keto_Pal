@@ -69,9 +69,6 @@ export default {
       return this.$store.state.food
     }
   },
-  // data:()=>({
-  //   food: this.$store.state.food
-  // }),
   methods: {
   }
 }

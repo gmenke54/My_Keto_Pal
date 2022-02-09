@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from .models import User, Profile, Day, Food
 
-# Working:
-
 
 class FoodSerializer(serializers.ModelSerializer):
     days = serializers.PrimaryKeyRelatedField(
@@ -19,30 +17,6 @@ class FoodSerializer(serializers.ModelSerializer):
         fields = ('id', 'food_url', 'days', 'name', 'weight', 'carbs', 'calories', 'fat', 'protein',
                   'sugar', 'fiber', 'saturated', 'trans', 'chol', 'sodium', 'added_sugar', 'chol_dv', 'sodium_dv', )
 
-
-# class MealSerializer(serializers.ModelSerializer):
-#     food_list = FoodSerializer(
-#         many=True,
-#         read_only=True
-#     )
-
-#     meal_url = serializers.ModelSerializer.serializer_url_field(
-#         view_name='meal_detail'
-#     )
-
-#     day = serializers.HyperlinkedRelatedField(
-#         view_name='day_detail',
-#         read_only=True
-#     )
-
-#     day_id = serializers.PrimaryKeyRelatedField(
-#         queryset=Day.objects.all(),
-#         source='day'
-#     )
-
-#     class Meta:
-#         model = Meal
-#         fields = ('id', 'meal_url', 'food_list', 'day', 'day_id', 'name', )
 
 class DaySerializer(serializers.ModelSerializer):
     food_list = FoodSerializer(
