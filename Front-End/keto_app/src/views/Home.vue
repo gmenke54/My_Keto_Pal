@@ -20,7 +20,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import { Calendar, DatePicker } from 'v-calendar';
 import 'v-calendar/dist/style.css';
 import DayCard from '../components/DayCard.vue'
