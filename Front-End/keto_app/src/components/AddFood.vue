@@ -67,12 +67,7 @@ export default {
       const result = resp.data.filter(day => day.user_id===id && day.date===this.date)
       console.log(result[0])
       this.$store.commit('setDay', result[0])
-      // const newItem = response.data
-      // need to push newItem onto the end of the food list stored in global state
-      // make axios to gte current day again
-      
-      // this.$store.commit('setDay', res)
-      // console.log(response)
+      this.newFood = null
       this.dispBtn=true
     }
   }
