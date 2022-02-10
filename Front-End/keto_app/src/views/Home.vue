@@ -2,6 +2,7 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <div class="flex-row">
+        <BarChart :chartData="weekData" :chartOptions="weekOptions" />
         <DatePicker class="cal" mode="date" v-model="date"/>
         <div class="day-card">
           <div class="day-head">{{header}}</div>
@@ -39,7 +40,7 @@ import DayCard from '../components/DayCard.vue'
 import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
 
-import { DoughnutChart } from 'vue-chart-3';
+import { DoughnutChart, BarChart } from 'vue-chart-3';
 
 export default {
   name: 'Home',
@@ -49,7 +50,8 @@ export default {
     DayCard,
     MainDay,
     AddFood,
-    DoughnutChart
+    DoughnutChart,
+    BarChart
   },
   data() {
     return {
@@ -104,6 +106,27 @@ export default {
           {
             data: [this.$store.state.curFat.toFixed(1), (rem_carbs.toFixed(1))],
             backgroundColor: [color, 'white'],
+          },
+        ],
+      }
+    },
+    weekOptions(){
+      return {
+        plugins: {
+            title: {
+                display: false,
+                text: 'Custom Chart Title'
+            }
+        }
+      }
+    },
+    weekData(){
+      return {
+        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        datasets: [
+          {
+            data: [20, 45, 43, 23, 20, 37, 30],
+            backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED', '#77CEFF', '#0079AF'],
           },
         ],
       }
