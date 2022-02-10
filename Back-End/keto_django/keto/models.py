@@ -101,4 +101,4 @@ class Comment(models.Model):
     rating = models.IntegerField(null=True)
 
     def __str__(self):
-        return self.pk
+        return self.comments

@@ -8,9 +8,10 @@ urlpatterns = [
          name='profile_detail'),
     path('days/', views.DayList.as_view(), name='day_list'),
     path('days/<int:pk>', views.DayDetail.as_view(), name='day_detail'),
-    # path('meals/', views.MealList.as_view(), name='meal_list'),
-    # path('meals/<int:pk>', views.MealDetail.as_view(), name='meal_detail'),
     path('foods/', views.FoodList.as_view(), name='food_list'),
     path('foods/<int:pk>', views.FoodDetail.as_view(), name='food_detail'),
-    # path('day/<int:user>', views.GetDayByUser.as_view(), name='get_day')
+    path('recipes/', views.RecipeList.as_view(), name='recipe_list'),
+    path('recipes/<int:pk>', views.RecipeDetail.as_view(), name='recipe_detail'),
+    path('comments/', views.CommentList.as_view(), name='comment_list'),
+    path('comments/<int:pk>', views.CommentDetail.as_view(), name='comment_detail'),
 ]

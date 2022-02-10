@@ -58,7 +58,8 @@ class DaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Day
-        fields = ('id', 'day_url', 'user_id', 'date', 'food_list', )
+        fields = ('id', 'day_url', 'user_id', 'date',
+                  'food_list', 'recipes_eaten')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
