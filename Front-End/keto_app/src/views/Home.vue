@@ -1,17 +1,29 @@
 <template>
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
-      <DatePicker class="cal" mode="date" v-model="date"/>
-      <DoughnutChart :chartData="testData" />
-      <div class="day-card">
-        <div class="day-head">{{header}}</div>
-        <div v-if="this.day && this.$store.state.user.id" >
-          <DayCard :date="this.day" />
+      <div class="flex-row">
+        <DatePicker class="cal" mode="date" v-model="date"/>
+        <div class="day-card">
+          <div class="day-head">{{header}}</div>
+          <div v-if="this.day && this.$store.state.user.id" >
+            <DayCard :date="this.day" />
+          </div>
+          <div v-if="this.$store.state.day">
+            <MainDay />
+          </div>
+            <AddFood :date="this.day"/>
         </div>
-        <div v-if="this.$store.state.day">
-          <MainDay />
+      </div>
+      <div class="flex-row dough">
+        <div class="nut">
+          <DoughnutChart class="nut" :chartData="testData" />
         </div>
-          <AddFood :date="this.day"/>
+        <div class="nut">
+          <DoughnutChart :chartData="testData" />
+        </div>
+        <div class="nut">
+          <DoughnutChart :chartData="testData" />
+        </div>
       </div>
     </div>
     <div v-else>
@@ -42,18 +54,26 @@ export default {
   data() {
     return {
       date: new Date(),
-      testData: {
-      labels: ['Carbs', 'Fat', 'Sugar'],
-      datasets: [
-        {
-          data: [30, 40, 60],
-          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B'],
-        },
-      ],
-    }
     }
   },
   computed: {
+    testData(){
+      let color = '#3181CE'
+      let rem_carbs = this.$store.state.profile.daily_carb-this.$store.state.curCarbs
+      if (rem_carbs<= 0){
+        rem_carbs = 0
+        color = 'rgb(165, 70, 70)';
+      }
+      return {
+        labels: ['Carbs', 'Remaining Carbs'],
+        datasets: [
+          {
+            data: [this.$store.state.curCarbs, (rem_carbs)],
+            backgroundColor: [color, 'white'],
+          },
+        ],
+      }
+    },
     day(){
       let date =  this.date.toLocaleString('en-US').slice(0,9)
       console.log(date)
@@ -91,9 +111,18 @@ export default {
 <style scoped>
 .cont{
   display: flex;
+  flex-direction: column;
+}
+.flex-row {
+  display: flex;
   justify-content: space-around;
-  align-items: flex-start;
-  flex-wrap: wrap
+  align-items: center;
+  flex: wrap;
+}
+.dough{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
 }
 .day-head{
   font-weight: 600
