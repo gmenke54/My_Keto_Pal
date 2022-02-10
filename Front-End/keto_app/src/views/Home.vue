@@ -3,7 +3,7 @@
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <div class="flex-row">
         <BarChart :chartData="weekData" :chartOptions="weekOptions" />
-        <DatePicker class="cal" mode="date" v-model="date"/>
+        <DatePicker class="cal" mode="date" v-model="date" :attributes='attrs'/>
         <div class="day-card">
           <div class="day-head">{{header}}</div>
           <div v-if="this.day && this.$store.state.user.id" >
@@ -56,6 +56,17 @@ export default {
   data() {
     return {
       date: new Date(),
+      // This attribute keeps the current day highlighted in addition to the user selected day:
+      attrs: [
+        {
+          key: 'today',
+          highlight: {
+          color: 'blue',
+          fillMode: 'outline',
+        },
+          dates: new Date(),
+        },
+      ],
     }
   },
   computed: {
