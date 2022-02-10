@@ -23,6 +23,9 @@ class Profile(models.Model):
     name = models.CharField(max_length=100, null=True)
     age = models.IntegerField(null=True)
     activ = models.CharField(max_length=50, null=True)
+    daily_carb = models.FloatField(default=30.0)
+    daily_fat = models.FloatField(default=150.0)
+    daily_sugar = models.FloatField(default=10.0)
 
     def __str__(self):
         return str(self.user.username)
@@ -63,14 +66,15 @@ class Food(models.Model):
 
 
 class Recipe(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='my_recipes', blank=True)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='my_recipes', blank=True, null=True)
     days = models.ManyToManyField(
         Day, related_name="recipes_eaten", blank=True)
     servings = models.IntegerField(default=1)
     name = models.CharField(max_length=100, null=True)
     instructions = models.TextField(null=True)
     ingredients = models.TextField(null=True)
+    type = models.CharField(default="recipe", max_length=100)
     weight = models.FloatField(default=0.0)
     carbs = models.FloatField(default=0.0)
     calories = models.FloatField(default=0.0)
@@ -90,13 +94,27 @@ class Recipe(models.Model):
         return self.name
 
 
+class Post(models.Model):
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='my_posts', blank=True)
+    text = models.CharField(max_length=250, null=True)
+    img = models.TextField(null=True, blank=True)
+    link = models.TextField(null=True, blank=True)
+    type = models.CharField(default="post", max_length=100)
+
+    def __str__(self):
+        return self.text
+
+
 class Comment(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='my_comments', blank=True)
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='my_comments', blank=True, null=True)
     recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, related_name='comment_list', blank=True)
+        Recipe, on_delete=models.CASCADE, related_name='comment_list', blank=True, null=True)
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments', blank=True, null=True)
     comments = models.TextField(null=True)
-    rating = models.IntegerField(null=True)
+    rating = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.comments

@@ -2,8 +2,8 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProfileSerializer, DaySerializer, FoodSerializer, CommentSerializer, RecipeSerializer
-from .models import Profile, Day, Food, Comment, Recipe
+from .serializers import ProfileSerializer, DaySerializer, FoodSerializer, CommentSerializer, RecipeSerializer, PostSerializer
+from .models import Profile, Day, Food, Comment, Recipe, Post
 
 
 class ProfileList(generics.ListCreateAPIView):
@@ -54,3 +54,13 @@ class CommentList(generics.ListCreateAPIView):
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+
+class PostList(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer

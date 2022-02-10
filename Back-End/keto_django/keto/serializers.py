@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Profile, Day, Food, Comment, Recipe
+from .models import User, Profile, Day, Food, Comment, Recipe, Post
 
 
 class FoodSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class FoodSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ('user', 'recipe', 'comments', 'rating', )
+        fields = ('profile', 'recipe', 'post', 'comments', 'rating', )
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -32,8 +32,19 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = ('user', 'comment_list', 'days', 'servings', 'name', 'instructions', 'ingredients', 'weight', 'carbs', 'calories',
+        fields = ('type', 'profile', 'comment_list', 'days', 'servings', 'name', 'instructions', 'ingredients', 'weight', 'carbs', 'calories',
                   'fat', 'protein', 'sugar', 'fiber', 'saturated', 'trans', 'chol', 'sodium', 'added_sugar', 'chol_dv', 'sodium_dv', )
+
+
+class PostSerializer(serializers.ModelSerializer):
+    comments = CommentSerializer(
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = Post
+        fields = ('type', 'comments', 'profile', 'text', 'img', 'link', )
 
 
 class DaySerializer(serializers.ModelSerializer):
@@ -63,7 +74,25 @@ class DaySerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    days = DaySerializer(many=True, read_only=True)
+    days = DaySerializer(
+        many=True,
+        read_only=True
+    )
+
+    my_recipes = RecipeSerializer(
+        many=True,
+        read_only=True
+    )
+
+    my_posts = PostSerializer(
+        many=True,
+        read_only=True
+    )
+
+    my_comments = CommentSerializer(
+        many=True,
+        read_only=True
+    )
 
     profile_url = serializers.ModelSerializer.serializer_url_field(
         view_name='profile_detail'
@@ -77,4 +106,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('days', 'user', 'profile_url', 'user_id', 'cur_weight',
-                  'goal_weight', 'img', 'keto_weeks', 'name', 'age', 'activ')
+                  'goal_weight', 'img', 'keto_weeks', 'name', 'age', 'activ', 'my_recipes', 'my_posts', 'my_comments', 'daily_carb', 'daily_fat', 'daily_sugar')

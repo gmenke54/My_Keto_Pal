@@ -3,10 +3,12 @@
     <div v-if="this.$store.state.isAuthenticated">
       <div v-if="this.$store.state.profile">
         <div class="pic-cont">
+          <div class="activity" :class="color">{{this.activity}}</div>
           <img @mouseover="dispEdit=true" @mouseleave="dispEdit=false" :src="this.$store.state.profile.img" class="pic" alt="profile picture">
           <div v-if="dispEdit" class="edit">click to edit</div>
+          
         </div>
-        <div class="name">{{ this.$store.state.profile.name}}</div>
+        <div class="name">{{ this.$store.state.profile.name}}, {{this.$store.state.profile.age}}</div>
         <div>{{this.$store.state.user.email}}</div>
         <div @dblclick="togDisplay" class="click">
           <div v-if="displayForm">
@@ -39,10 +41,19 @@ export default {
   data: ()=>({
     newWeight: null,
     displayForm: false,
-    dispEdit: false
+    dispEdit: false,
+    color: 'blue'
   }),
   components: {
     AddProfile
+  },
+  computed: {
+    activity(){
+      if (this.$store.state.profile.activ === 'low'){
+        this.color = "red"
+        return "Not Very Active"
+      }
+    }
   },
   methods: {
     togDisplay(){
@@ -114,5 +125,23 @@ export default {
 }
 .name{
   font-weight: 600
+}
+.activity{
+  border-radius: 5px;
+  color: white;
+  width: 90px;
+  padding: 5px 0;
+  position: absolute;
+  /* left: 60%;
+  top: 70% */
+}
+.red{
+  background-color: rgb(165, 70, 70);
+}
+.blue{
+  background-color: #3181CE;
+}
+.gold{
+  background-color: rgb(173, 152, 31)
 }
 </style>

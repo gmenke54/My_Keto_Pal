@@ -14,4 +14,6 @@ urlpatterns = [
     path('recipes/<int:pk>', views.RecipeDetail.as_view(), name='recipe_detail'),
     path('comments/', views.CommentList.as_view(), name='comment_list'),
     path('comments/<int:pk>', views.CommentDetail.as_view(), name='comment_detail'),
+    path('posts/', views.PostList.as_view(), name='post_list'),
+    path('posts/<int:pk>', views.PostDetail.as_view(), name='post_detail'),
 ]
