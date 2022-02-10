@@ -2,6 +2,7 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <DatePicker class="cal" mode="date" v-model="date"/>
+      <DoughnutChart :chartData="testData" />
       <div class="day-card">
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
@@ -26,6 +27,8 @@ import DayCard from '../components/DayCard.vue'
 import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
 
+import { DoughnutChart } from 'vue-chart-3';
+
 export default {
   name: 'Home',
   components: {
@@ -34,11 +37,21 @@ export default {
     DayCard,
     MainDay,
     AddFood,
+    DoughnutChart
   },
   data() {
     return {
       date: new Date(),
-    };
+      testData: {
+      labels: ['Carbs', 'Fat', 'Sugar'],
+      datasets: [
+        {
+          data: [30, 40, 60],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B'],
+        },
+      ],
+    }
+    }
   },
   computed: {
     day(){

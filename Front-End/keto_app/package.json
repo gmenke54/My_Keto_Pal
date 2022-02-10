@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.0.0",
+    "vue-chart-3": "^3.0.9",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },

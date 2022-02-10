@@ -32,6 +32,7 @@ export default {
         return accumulator + food.carbs;
       }, 0);
       this.carbs = totalCarbs
+      this.$store.commit("setCurCarbs", totalCarbs)
     }
   }
 }
