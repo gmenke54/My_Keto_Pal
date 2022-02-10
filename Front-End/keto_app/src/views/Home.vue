@@ -2,7 +2,10 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <DatePicker mode="date" v-model="date"/>
-      <Label />
+      <!-- <div v-if="this.$store.state.dispLabel">
+        <Label class="label" />
+      </div> -->
+
       <div class="day-card">
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
@@ -26,7 +29,7 @@ import 'v-calendar/dist/style.css';
 import DayCard from '../components/DayCard.vue'
 import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
-import Label from '../components/Label.vue'
+// import Label from '../components/Label.vue'
 
 export default {
   name: 'Home',
@@ -36,7 +39,7 @@ export default {
     DayCard,
     MainDay,
     AddFood,
-    Label
+    // Label
   },
   data() {
     return {
@@ -94,4 +97,7 @@ export default {
   border-radius: 8px;
   border: 1px solid rgb(214, 214, 214)
 }
+/* .label{
+  display: absolute;
+} */
 </style>

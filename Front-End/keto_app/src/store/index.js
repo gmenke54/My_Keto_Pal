@@ -11,6 +11,7 @@ export default createStore({
       email: null
     },
     day: null,
+    dispLabel: false,
     food: {
       days: [],
       name: 'Hover over a food to see details',
@@ -60,6 +61,9 @@ export default createStore({
     },
     setFood(state, payload) {
       state.food = payload;
+    },
+    setDispLabel(state, payload) {
+      state.dispLabel = payload;
     }
   },
   actions: {

@@ -1,5 +1,9 @@
 <template>
-  <div class="food-card" @mouseover="setLabel">
+<div>
+    <div v-if="showLabel">
+      <Label class="label" />
+    </div>
+    <div class="food-card" @mouseover="setLabel" @mouseleave="hideLabel">
     <div class="food-line" v-if="dispUpdate===false" @dblclick="updateFood" >{{food.name}} | Carbs: {{food.carbs.toFixed(1)}}</div>
     <div v-if="dispUpdate===false" @click="delFood" class="btn">-</div>
     <div v-if="dispUpdate">
@@ -9,18 +13,25 @@
       </form>
     </div>
   </div>
+</div>
+
 </template>
 
 <script>
 import axios from 'axios'
+import Label from '../components/Label.vue'
 export default {
   name: 'FoodCard',
+  components: {
+    Label
+  },
   props: {
     food: Object
   },
   data: ()=> ({
     dispUpdate: false,
     newFood: null,
+    showLabel: false
   }),
   computed:{
     placeholder(){
@@ -29,7 +40,11 @@ export default {
   },
   methods: {
     setLabel(){
+      this.showLabel = true
       this.$store.commit("setFood", this.food)
+    },
+    hideLabel(){
+      this.showLabel = false
     },
     async delFood(){
       console.log(this.food.id)
@@ -121,5 +136,8 @@ export default {
 }
 .food-line{
   cursor: pointer;
+}
+.label{
+  position: absolute;
 }
 </style>
