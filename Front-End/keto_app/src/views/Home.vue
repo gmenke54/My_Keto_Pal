@@ -16,10 +16,10 @@
       </div>
       <div v-if="this.$store.state.day" class="flex-row dough">
         <div class="nut">
-          <DoughnutChart class="nut" :chartData="carbData" />
+          <DoughnutChart :chartData="sugarData" />
         </div>
         <div class="nut">
-          <DoughnutChart :chartData="sugarData" />
+          <DoughnutChart class="nut" :chartData="carbData" />
         </div>
         <div class="nut">
           <DoughnutChart :chartData="fatData" />
@@ -85,7 +85,7 @@ export default {
         labels: ['Sugars', 'Remaining Sugars'],
         datasets: [
           {
-            data: [this.$store.state.curSugar, (rem_carbs)],
+            data: [this.$store.state.curSugar.toFixed(1), (rem_carbs.toFixed(1))],
             backgroundColor: [color, 'white'],
           },
         ],
@@ -102,7 +102,7 @@ export default {
         labels: ['Fats', 'Needed Fats'],
         datasets: [
           {
-            data: [this.$store.state.curFat, (rem_carbs)],
+            data: [this.$store.state.curFat.toFixed(1), (rem_carbs.toFixed(1))],
             backgroundColor: [color, 'white'],
           },
         ],
