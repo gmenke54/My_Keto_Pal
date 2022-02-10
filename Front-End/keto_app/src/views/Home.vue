@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
+      <!-- <div v-if="week">{{week}}</div> -->
       <div class="flex-row">
         <BarChart :chartData="weekData" :chartOptions="weekOptions" />
         <DatePicker class="cal" mode="date" v-model="date" :attributes='attrs'/>
@@ -66,7 +67,7 @@ export default {
         },
           dates: new Date(),
         },
-      ],
+      ]
     }
   },
   computed: {
@@ -143,8 +144,9 @@ export default {
       }
     },
     day(){
+      console.log(this.date)
       let date =  this.date.toLocaleString('en-US').slice(0,9)
-      console.log(date)
+      // console.log(date)
       let newDate = date.replace(',', '')
       let splitArr = newDate.split("/")
       let month = ''
@@ -160,19 +162,45 @@ export default {
         day = `${splitArr[1]}`
       }
       let finalDate = `${splitArr[2]}-${month}-${day}`
-      console.log(finalDate)
+      // console.log(finalDate)
       return finalDate
     },
     header(){
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return this.date.toLocaleString('en-US', options)
+    },
+    week(){
+      let date = this.date
+      let arr = [];
+      date.setDate(date.getDate() - date.getDay());
+      for (let i = 0; i < 7; i++) {
+        let curDate = new Date(date.setDate(date.getDate()));
+        arr.push(curDate);
+        date.setDate(date.getDate() + 1);
+      }
+      function formatDate(dateFormat) {
+        let date = dateFormat.toLocaleString('en-US').slice(0, 9);
+        let newDate = date.replace(',', '');
+        let splitArr = newDate.split('/');
+        let month = '';
+        let day = '';
+        if (splitArr[0].length === 1) {
+          month = `0${splitArr[0]}`;
+        } else {
+          month = `${splitArr[0]}`;
+        }
+        if (splitArr[1].length === 1) {
+          day = `0${splitArr[1]}`;
+        } else {
+          day = `${splitArr[1]}`;
+        }
+        let finalDate = `${splitArr[2]}-${month}-${day}`;
+        return finalDate;
+      }
+      const finalArr = arr.map((day) => formatDate(day));
+      return(finalArr);
     }
   },
-  methods: {
-    postDay(){
-      console.log(this.day)
-    }
-  }
 }
 </script>
 
