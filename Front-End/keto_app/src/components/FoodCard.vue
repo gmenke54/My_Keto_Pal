@@ -4,14 +4,16 @@
       <Label class="label" />
     </div>
     <div class="food-card" @mouseover="setLabel" @mouseleave="hideLabel">
-    <div class="food-line" v-if="dispUpdate===false" @dblclick="updateFood" >{{food.name}} | Carbs: {{food.carbs.toFixed(1)}}</div>
-    <div v-if="dispUpdate===false" @click="delFood" class="btn">-</div>
-    <div v-if="dispUpdate">
-      <form @submit.prevent="postFood">
-        <input type="text" name="newFood" v-model="newFood" :placeholder="placeholder">
-        <button type="submit">Update</button>
-      </form>
-    </div>
+      <div class="food-line" v-if="dispUpdate===false" @dblclick="updateFood" >{{food.name}} | Carbs: {{food.carbs.toFixed(1)}}</div>
+      <div v-if="dispUpdate===false" @click="delFood" class="btn">-</div>
+      <div v-if="dispLoading" class="lds-ring"><div></div><div></div><div></div><div></div></div>
+      <div v-if="dispUpdate && dispLoading===false">
+        <form @submit.prevent="postFood">
+          <input type="text" name="newFood" v-model="newFood" :placeholder="placeholder">
+          <button type="submit">Update</button>
+        </form>
+      </div>
+      <button v-if="dispCancel" @click="cancel">Cancel</button>
   </div>
 </div>
 
@@ -31,14 +33,25 @@ export default {
   data: ()=> ({
     dispUpdate: false,
     newFood: null,
-    showLabel: false
+    showLabel: false,
+    dispLoading: false,
+    error: false,
+    dispCancel: false
   }),
   computed:{
     placeholder(){
-      return this.food.name
+      if (this.error===true){
+        return "unknown food - try again"
+      } else {
+        return this.food.name
+      }
     }
   },
   methods: {
+    cancel(){
+      this.dispCancel = false
+      this.dispUpdate = false
+    },
     setLabel(){
       this.showLabel = true
       this.$store.commit("setFood", this.food)
@@ -60,6 +73,8 @@ export default {
       this.dispUpdate=true
     },
     async postFood(){
+      this.error=false
+      this.dispLoading = true
       let res = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
       let nutrients = res.data
       console.log('posting food')
@@ -98,9 +113,12 @@ export default {
       console.log(result[0])
       this.$store.commit('setDay', result[0])
       this.newFood = null
+      this.dispLoading=false
       this.dispUpdate=false
       } catch {
-        this.placeholder = "unknown food - try again"
+        this.dispCancel = true
+        this.error = true
+        this.dispLoading=false
         this.newFood= null
         console.log('caught error')
       }
@@ -118,6 +136,7 @@ export default {
   /* margin: 10px 0; */
   padding: 4px 5px;
   border-radius: 3px;
+  cursor: pointer;
 }
 .food-card:hover{
   background-color:rgb(240, 240, 240)
@@ -125,21 +144,53 @@ export default {
 
 .btn{
   cursor: pointer;
-  background-color: #0166EE;
+  background-color: #3181CE;
   color: white;
-  border-radius: 3px;
+  border-radius: 30px;
   padding: 0 10px;
   font-weight: 900
 }
 .btn:hover{
-  background-color: #0048e2;
-}
-.food-line{
-  cursor: pointer;
+  background-color: #338ee2;;
 }
 .label{
   /* works but sucks: */
   position: fixed;
   right: 37vw;
+}
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #3181CE;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #3181CE transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

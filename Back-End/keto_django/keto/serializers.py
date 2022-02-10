@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Profile, Day, Food
+from .models import User, Profile, Day, Food, Comment, Recipe
 
 
 class FoodSerializer(serializers.ModelSerializer):
@@ -18,8 +18,31 @@ class FoodSerializer(serializers.ModelSerializer):
                   'sugar', 'fiber', 'saturated', 'trans', 'chol', 'sodium', 'added_sugar', 'chol_dv', 'sodium_dv', )
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('user', 'recipe', 'comments', 'rating', )
+
+
+class RecipeSerializer(serializers.ModelSerializer):
+    comment_list = CommentSerializer(
+        many=True,
+        read_only=True
+    )
+
+    class Meta:
+        model = Recipe
+        fields = ('user', 'comment_list', 'days', 'servings', 'name', 'instructions', 'ingredients', 'weight', 'carbs', 'calories',
+                  'fat', 'protein', 'sugar', 'fiber', 'saturated', 'trans', 'chol', 'sodium', 'added_sugar', 'chol_dv', 'sodium_dv', )
+
+
 class DaySerializer(serializers.ModelSerializer):
     food_list = FoodSerializer(
+        many=True,
+        read_only=True
+    )
+
+    recipes_eaten = RecipeSerializer(
         many=True,
         read_only=True
     )
@@ -53,4 +76,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ('days', 'user', 'profile_url', 'user_id', 'cur_weight',
-                  'goal_weight', 'img', 'keto_weeks', 'name', )
+                  'goal_weight', 'img', 'keto_weeks', 'name', 'age', 'activ')

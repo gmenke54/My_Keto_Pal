@@ -2,8 +2,8 @@
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serializers import ProfileSerializer, DaySerializer, FoodSerializer
-from .models import Profile, Day, Food
+from .serializers import ProfileSerializer, DaySerializer, FoodSerializer, CommentSerializer, RecipeSerializer
+from .models import Profile, Day, Food, Comment, Recipe
 
 
 class ProfileList(generics.ListCreateAPIView):
@@ -26,24 +26,6 @@ class DayDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = DaySerializer
 
 
-# class GetDayByUser(APIView):
-#     queryset = Day.objects.all()
-
-#     def get(request):
-#         print(request.data)
-#         return Response
-
-
-# class MealList(generics.ListCreateAPIView):
-#     queryset = Meal.objects.all()
-#     serializer_class = MealSerializer
-
-
-# class MealDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Meal.objects.all()
-#     serializer_class = MealSerializer
-
-
 class FoodList(generics.ListCreateAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
@@ -52,3 +34,23 @@ class FoodList(generics.ListCreateAPIView):
 class FoodDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
+
+
+class RecipeList(generics.ListCreateAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+
+
+class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeSerializer
+
+
+class CommentList(generics.ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+
+class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer

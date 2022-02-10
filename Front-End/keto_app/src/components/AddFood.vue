@@ -76,6 +76,7 @@ export default {
       this.dispLoading=false
       this.dispBtn=true
       } catch {
+        this.dispLoading=false
         this.placeholder = "unknown food - try again"
         this.newFood= null
         console.log('caught error')
@@ -88,7 +89,7 @@ export default {
 <style scoped>
 .btn{
   cursor: pointer;
-  background-color: #0166EE;
+  background-color: #3181CE;
   color: white;
   font-size: 20px;
   font-weight: 500;
@@ -97,7 +98,7 @@ export default {
 }
 
 .btn:hover{
-  background-color: #0048e2;
+  background-color: #338ee2;;
 }
 
 .lds-ring {
@@ -113,10 +114,10 @@ export default {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #0166EE;
+  border: 8px solid #3181CE;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #0166EE transparent transparent transparent;
+  border-color: #3181CE transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;

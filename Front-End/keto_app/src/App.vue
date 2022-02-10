@@ -67,7 +67,7 @@ a, .a{
   text-decoration: none;
   color: #2c3e50;
   &.router-link-exact-active {
-    color: #0166EE;
+    color: #3181CE;
   }
   cursor: pointer;
   border-radius: 5px;

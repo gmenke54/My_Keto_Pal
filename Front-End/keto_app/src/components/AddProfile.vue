@@ -84,7 +84,7 @@ export default {
 
 .btn{
   cursor: pointer;
-  background-color: #0166EE;
+  background-color: #3181CE;
   color: white;
   font-size: 20px;
   font-weight: 500;
@@ -93,7 +93,7 @@ export default {
 }
 
 .btn:hover{
-  background-color: #0048e2;
+  background-color: #358bdb;
 }
 
 input{
@@ -124,15 +124,15 @@ input{
 }
 
 .hollow{
-  border: 2px solid #0166EE;
+  border: 2px solid #3181CE;
   background-color: white;
-  color: #0166EE
+  color: #3181CE
 }
 
 .hollow:hover{
   background-color: #F0F2F4;
-  border: 2px solid #0048e2;
-  color: #0048e2;
+  border: 2px solid #338ee2;;
+  color: #338ee2;;
 }
 
 .addprofile{

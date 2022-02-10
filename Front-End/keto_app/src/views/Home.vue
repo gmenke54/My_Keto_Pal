@@ -1,11 +1,7 @@
 <template>
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
-      <DatePicker mode="date" v-model="date"/>
-      <!-- <div v-if="this.$store.state.dispLabel">
-        <Label class="label" />
-      </div> -->
-
+      <DatePicker class="cal" mode="date" v-model="date"/>
       <div class="day-card">
         <div class="day-head">{{header}}</div>
         <div v-if="this.day && this.$store.state.user.id" >
@@ -29,7 +25,6 @@ import 'v-calendar/dist/style.css';
 import DayCard from '../components/DayCard.vue'
 import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
-// import Label from '../components/Label.vue'
 
 export default {
   name: 'Home',
@@ -39,7 +34,6 @@ export default {
     DayCard,
     MainDay,
     AddFood,
-    // Label
   },
   data() {
     return {
@@ -48,7 +42,6 @@ export default {
   },
   computed: {
     day(){
-      // return this.date.toISOString().slice(0,10)
       let date =  this.date.toLocaleString('en-US').slice(0,9)
       console.log(date)
       let newDate = date.replace(',', '')
@@ -96,9 +89,10 @@ export default {
   padding: 10px;
   background-color: white;
   border-radius: 8px;
-  border: 1px solid rgb(214, 214, 214)
+  border: 1px solid rgb(214, 214, 214);
+  box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.7)
 }
-/* .label{
-  display: absolute;
-} */
+.cal{
+  box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.7)
+}
 </style>
