@@ -87,6 +87,7 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
+  flex-wrap: wrap
 }
 .day-head{
   font-weight: 600

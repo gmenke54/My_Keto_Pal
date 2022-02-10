@@ -138,6 +138,8 @@ export default {
   cursor: pointer;
 }
 .label{
-  position: absolute;
+  /* works but sucks: */
+  position: fixed;
+  right: 37vw;
 }
 </style>

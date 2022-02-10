@@ -1,12 +1,13 @@
 <template>
   <div class="add-food">
     <div v-if="dispBtn" @click="dispBtn=false" class="btn">Log Food</div>
-    <div v-if="dispBtn===false">
+    <div v-if="dispBtn===false && dispLoading===false">
       <form @submit.prevent="postFood">
         <input type="text" name="newFood" v-model="newFood" :placeholder="placeholder">
         <button type="submit">Add</button>
       </form>
     </div>
+    <div v-if="dispLoading" class="lds-ring"><div></div><div></div><div></div><div></div></div>
   </div>
 </template>
 
@@ -17,13 +18,15 @@ export default {
   data: ()=> ({
     dispBtn: true,
     newFood: null,
-    placeholder: "1 cup cheddar cheese"
+    placeholder: "1 cup cheddar cheese",
+    dispLoading: false
   }),
   props: {
     date: String
   },
   methods: {
     async postFood(){
+      this.dispLoading = true
       let res = await axios.get(`https://api.edamam.com/api/nutrition-data?app_id=${process.env.VUE_APP_ID}&app_key=${process.env.VUE_APP_KEY}&nutrition-type=cooking&ingr=${this.newFood}`)
       let nutrients = res.data
       let curDay = this.$store.state.day
@@ -70,6 +73,7 @@ export default {
       this.$store.commit('setDay', result[0])
       this.newFood = null
       this.placeholder = "1 cup cheddar cheese"
+      this.dispLoading=false
       this.dispBtn=true
       } catch {
         this.placeholder = "unknown food - try again"
@@ -94,5 +98,41 @@ export default {
 
 .btn:hover{
   background-color: #0048e2;
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #0166EE;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #0166EE transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
