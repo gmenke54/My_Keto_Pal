@@ -14,15 +14,15 @@
             <AddFood :date="this.day"/>
         </div>
       </div>
-      <div class="flex-row dough">
+      <div v-if="this.$store.state.day" class="flex-row dough">
         <div class="nut">
-          <DoughnutChart class="nut" :chartData="testData" />
+          <DoughnutChart class="nut" :chartData="carbData" />
         </div>
         <div class="nut">
-          <DoughnutChart :chartData="testData" />
+          <DoughnutChart :chartData="sugarData" />
         </div>
         <div class="nut">
-          <DoughnutChart :chartData="testData" />
+          <DoughnutChart :chartData="fatData" />
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@ export default {
     }
   },
   computed: {
-    testData(){
+    carbData(){
       let color = '#3181CE'
       let rem_carbs = this.$store.state.profile.daily_carb-this.$store.state.curCarbs
       if (rem_carbs<= 0){
@@ -68,7 +68,41 @@ export default {
         labels: ['Carbs', 'Remaining Carbs'],
         datasets: [
           {
-            data: [this.$store.state.curCarbs, (rem_carbs)],
+            data: [this.$store.state.curCarbs.toFixed(1), (rem_carbs.toFixed(1))],
+            backgroundColor: [color, 'white'],
+          },
+        ],
+      }
+    },
+    sugarData(){
+      let color = '#123E6B'
+      let rem_carbs = this.$store.state.profile.daily_sugar-this.$store.state.curSugar
+      if (rem_carbs<= 0){
+        rem_carbs = 0
+        color = 'rgb(165, 70, 70)';
+      }
+      return {
+        labels: ['Sugars', 'Remaining Sugars'],
+        datasets: [
+          {
+            data: [this.$store.state.curSugar, (rem_carbs)],
+            backgroundColor: [color, 'white'],
+          },
+        ],
+      }
+    },
+    fatData(){
+      let color = '#77CEFF'
+      let rem_carbs = this.$store.state.profile.daily_fat-this.$store.state.curFat
+      if (rem_carbs<= 0){
+        rem_carbs = 0
+        color = '#8ee696';
+      }
+      return {
+        labels: ['Fats', 'Needed Fats'],
+        datasets: [
+          {
+            data: [this.$store.state.curFat, (rem_carbs)],
             backgroundColor: [color, 'white'],
           },
         ],

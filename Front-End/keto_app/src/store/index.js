@@ -30,7 +30,9 @@ export default createStore({
       chol_dv: 0.0,
       sodium_dv: 0.0
     },
-    curCarbs: 0.0
+    curCarbs: 0.0,
+    curSugar: 0.0,
+    curFat: 0.0
   },
   mutations: {
     initializeStore(state) {
@@ -68,6 +70,12 @@ export default createStore({
     },
     setCurCarbs(state, payload) {
       state.curCarbs = payload;
+    },
+    setCurSugar(state, payload) {
+      state.curSugar = payload;
+    },
+    setCurFat(state, payload) {
+      state.curFat = payload;
     }
   },
   actions: {

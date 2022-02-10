@@ -20,9 +20,13 @@ export default {
   }),
   mounted(){
     this.countCarbs()
+    this.countSugar()
+    this.countFat()
   },
   updated(){
     this.countCarbs()
+    this.countSugar()
+    this.countFat()
   },
   methods: {
     countCarbs(){
@@ -33,6 +37,20 @@ export default {
       }, 0);
       this.carbs = totalCarbs
       this.$store.commit("setCurCarbs", totalCarbs)
+    },
+    countSugar(){
+      let arr = this.$store.state.day.food_list
+      let totalSugar = arr.reduce(function (accumulator, food) {
+        return accumulator + food.sugar;
+      }, 0);
+      this.$store.commit("setCurSugar", totalSugar)
+    },
+    countFat(){
+      let arr = this.$store.state.day.food_list
+      let totalFat = arr.reduce(function (accumulator, food) {
+        return accumulator + food.fat;
+      }, 0);
+      this.$store.commit("setCurFat", totalFat)
     }
   }
 }
