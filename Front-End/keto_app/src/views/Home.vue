@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       date: new Date(),
-      // This attribute keeps the current day highlighted in addition to the user selected day:
       attrs: [
         {
           key: 'today',
@@ -73,9 +72,11 @@ export default {
       weekData: null
     }
   },
-  // beforeMount(){
-  //   this.getAllDays()
-  // },
+  watch: {
+    date(){
+      this.getAllDays()
+    }
+  },
    mounted(){
     this.getAllDays()
   },
@@ -234,12 +235,6 @@ export default {
     async getAllDays(){
       const res = await axios.get(`http://127.0.0.1:8000/days`)
       let allDays = res.data
-      // axios
-      // .get(`http://127.0.0.1:8000/days`)
-      // .then(response => {
-      //   console.log(response)
-      //   this.$store.commit('setAllDays', response.data)
-      // })
       let date = this.date
       let arr = [];
       date.setDate(date.getDate() - date.getDay());
@@ -268,7 +263,6 @@ export default {
         return finalDate;
       }
       const finalArr = arr.map((day) => formatDate(day));
-      // console.log(this.$store.state.allDays)
       let id = this.$store.state.user.id
       let newArr = []
       for (let i=0; i<finalArr.length; i++){
