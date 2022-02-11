@@ -98,7 +98,8 @@ export default {
     font-size: 12px;
     border: 4px solid black;
     padding: 2px 5px 5px 5px;
-    background-color: white
+    background-color: white;
+    z-index:1;
   }
   .header{
     width: 175px;

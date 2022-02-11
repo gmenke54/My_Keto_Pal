@@ -3,9 +3,8 @@
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <div class="flex-row">
         <div class="nut" v-if="this.weekData">
-
           <BarChart :chartData="weekData" :options="this.options" :chartOptions="weekOptions" />  
-                    <div class="bar-title">This Week</div>
+          <div class="bar-title">This Week</div>
         </div>
         <DatePicker class="cal" mode="date" v-model="date" :attributes='attrs'/>
         <div class="day-card">
@@ -20,17 +19,31 @@
         </div>
       </div>
       <div v-if="this.$store.state.day" class="flex-row dough">
-        <div class="nut">
-          <div class="hole">Sugars</div>
+        <div class="nut" @mouseover="setSugGoal(true)" @mouseleave="setSugGoal(false)">
+          <transition name="fade">
+            <div class="hole" v-if="dispSugGoal===false">Sugars</div>
+          </transition>
+          <transition name="fade">
+            <div class="goal" v-if="dispSugGoal">Daily Goal: {{this.$store.state.profile.daily_sugar.toFixed(1)}}</div>
+          </transition>
           <DoughnutChart :chartData="sugarData" :options="this.options" />
-          
         </div>
-        <div class="nut">
-          <div class="hole">Carbs</div>
+        <div class="nut" @mouseover="setCarbGoal(true)" @mouseleave="setCarbGoal(false)">
+          <transition name="fade">
+            <div class="hole" v-if="dispCarbGoal===false">Carbs</div>
+          </transition>
+          <transition name="fade">
+            <div class="goal" v-if="dispCarbGoal">Daily Goal: {{this.$store.state.profile.daily_carb.toFixed(1)}}</div>
+          </transition>
           <DoughnutChart :chartData="carbData" :options="this.options" />
         </div>
-        <div class="nut">
-          <div class="hole">Fats</div>
+        <div class="nut" @mouseover="setGoal(true)" @mouseleave="setGoal(false)">
+          <transition name="fade">
+            <div class="hole" v-if="dispGoal===false">Fats</div>
+          </transition>
+          <transition name="fade">
+            <div class="goal" v-if="dispGoal">Daily Goal: {{this.$store.state.profile.daily_fat.toFixed(1)}}</div>
+          </transition>
           <DoughnutChart :chartData="fatData" :options="this.options" />
         </div>
       </div>
@@ -63,6 +76,9 @@ export default {
   },
   data() {
     return {
+      dispGoal: false,
+      dispCarbGoal: false,
+      dispSugGoal: false,
       date: new Date(),
       attrs: [
         {
@@ -76,6 +92,7 @@ export default {
       ],
       weekData: null,
       options: {
+        responsive: false,
         plugins: {
           legend: {
             display: false
@@ -188,6 +205,15 @@ export default {
     },
   },
   methods:{
+    setGoal(cond){
+      this.dispGoal=cond
+    },
+    setCarbGoal(cond){
+      this.dispCarbGoal=cond
+    },
+    setSugGoal(cond){
+      this.dispSugGoal=cond
+    },
     async getAllDays(){
       const res = await axios.get(`http://127.0.0.1:8000/days`)
       let allDays = res.data
@@ -296,10 +322,11 @@ export default {
   position: relative;
   display: flex;
   justify-content: center;
+  margin: 10px;
 }
 .hole{
   position: absolute;
-  top: 45%;
+  top: 44.5%;
   text-align: center;
   font-weight: 700;
   font-size: 33px
@@ -310,5 +337,16 @@ export default {
   text-align: center;
   font-weight: 600;
   font-size: 26px
+}
+.goal{
+  position: absolute;
+  top: 48%;
+  text-align: center;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .4s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
 }
 </style>
