@@ -18,9 +18,6 @@ export default {
     AddFeed,
   },
   methods: {
-    handleClick(preview) {
-      console.log('click', preview.domain, preview.title, preview.description, preview.img)
-    }
   }
 
 }

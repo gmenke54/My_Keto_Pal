@@ -2,9 +2,9 @@
   <div class="home">
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <div class="flex-row">
-        <div class="nut" v-if="this.weekData">
-          <BarChart :chartData="weekData" :options="this.options" :chartOptions="weekOptions" />  
-          <div class="bar-title">This Week</div>
+        <div class="nut" v-if="this.weekData && this.$store.state.profile.daily_carb">
+          <BarChart :chartData="weekData" :options="this.barOptions" :chartOptions="weekOptions" />  
+          <div class="bar-title">Weekly Carbs</div>
         </div>
         <DatePicker class="cal" mode="date" v-model="date" :attributes='attrs'/>
         <div class="day-card">
@@ -91,6 +91,19 @@ export default {
         },
       ],
       weekData: null,
+      barOptions: {
+        scales: {
+          y: {
+            suggestedMax: 40
+          }
+        },
+        responsive: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      },
       options: {
         responsive: false,
         plugins: {
@@ -216,6 +229,7 @@ export default {
     },
     async getAllDays(){
       const res = await axios.get(`http://127.0.0.1:8000/days`)
+      this.barOptions.scales.y.suggestedMax = this.$store.state.profile.daily_carb
       let allDays = res.data
       let date = this.date
       let arr = [];
