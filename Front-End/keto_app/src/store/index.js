@@ -32,7 +32,8 @@ export default createStore({
     },
     curCarbs: 0.0,
     curSugar: 0.0,
-    curFat: 0.0
+    curFat: 0.0,
+    allDays: null
   },
   mutations: {
     initializeStore(state) {
@@ -76,12 +77,15 @@ export default createStore({
     },
     setCurFat(state, payload) {
       state.curFat = payload;
+    },
+    setAllDays(state, payload) {
+      state.allDays = payload;
     }
   },
   actions: {
     async setUserId(state) {
       const res = await axios.get('api/v1/users/');
-      console.log(res.data[0]);
+      // console.log(res.data[0]);
       const curUser = {
         id: res.data[0].id,
         email: res.data[0].email
@@ -91,10 +95,10 @@ export default createStore({
         const resp = await axios.get(
           `http://127.0.0.1:8000/profiles/${this.state.user.id}`
         );
-        console.log(resp.data);
+        // console.log(resp.data);
         state.commit('setProfile', resp.data);
       } catch {
-        console.log('no profile found');
+        // console.log('no profile found');
       }
     }
   },

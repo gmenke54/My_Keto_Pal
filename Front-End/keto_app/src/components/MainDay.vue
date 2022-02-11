@@ -31,7 +31,7 @@ export default {
   methods: {
     countCarbs(){
       let arr = this.$store.state.day.food_list
-      console.log('running')
+      // console.log('running')
       let totalCarbs = arr.reduce(function (accumulator, food) {
         return accumulator + food.carbs;
       }, 0);

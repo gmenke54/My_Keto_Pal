@@ -20,11 +20,11 @@ export default {
   methods: {
     async getCurrentDay(){
       let id = this.$store.state.user.id
-      console.log(this.date, id)
+      // console.log(this.date, id)
       let res = await axios.get('http://127.0.0.1:8000/days')
-      console.log(res.data)
+      // console.log(res.data)
       const result = res.data.filter(day => day.user_id===id && day.date===this.date)
-      console.log(result[0])
+      // console.log(result[0])
       if (result.length>0){
         this.$store.commit('setDay', result[0])
       } else {

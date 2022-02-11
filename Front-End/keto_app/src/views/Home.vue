@@ -3,7 +3,9 @@
     <div v-if="this.$store.state.isAuthenticated" class="cont">
       <!-- <div v-if="week">{{week}}</div> -->
       <div class="flex-row">
-        <BarChart :chartData="weekData" :chartOptions="weekOptions" />
+        <div v-if="this.weekData">
+          <BarChart :chartData="weekData" :chartOptions="weekOptions" />  
+        </div>
         <DatePicker class="cal" mode="date" v-model="date" :attributes='attrs'/>
         <div class="day-card">
           <div class="day-head">{{header}}</div>
@@ -42,7 +44,7 @@ import MainDay from '../components/MainDay.vue'
 import AddFood from '../components/AddFood.vue'
 
 import { DoughnutChart, BarChart } from 'vue-chart-3';
-
+import axios from 'axios'
 export default {
   name: 'Home',
   components: {
@@ -67,9 +69,19 @@ export default {
         },
           dates: new Date(),
         },
-      ]
+      ],
+      weekData: null
     }
   },
+  // beforeMount(){
+  //   this.getAllDays()
+  // },
+   mounted(){
+    this.getAllDays()
+  },
+  // updated(){
+  //   this.getAllDays()
+  // },
   computed: {
     carbData(){
       let color = '#3181CE'
@@ -132,19 +144,8 @@ export default {
         }
       }
     },
-    weekData(){
-      return {
-        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        datasets: [
-          {
-            data: [20, 45, 43, 23, 20, 37, 30],
-            backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED', '#77CEFF', '#0079AF'],
-          },
-        ],
-      }
-    },
     day(){
-      console.log(this.date)
+      // console.log(this.date)
       let date =  this.date.toLocaleString('en-US').slice(0,9)
       // console.log(date)
       let newDate = date.replace(',', '')
@@ -169,7 +170,76 @@ export default {
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
       return this.date.toLocaleString('en-US', options)
     },
-    week(){
+    // week(){
+    //   let date = this.date
+    //   let arr = [];
+    //   date.setDate(date.getDate() - date.getDay());
+    //   for (let i = 0; i < 7; i++) {
+    //     let curDate = new Date(date.setDate(date.getDate()));
+    //     arr.push(curDate);
+    //     date.setDate(date.getDate() + 1);
+    //   }
+    //   function formatDate(dateFormat) {
+    //     let date = dateFormat.toLocaleString('en-US').slice(0, 9);
+    //     let newDate = date.replace(',', '');
+    //     let splitArr = newDate.split('/');
+    //     let month = '';
+    //     let day = '';
+    //     if (splitArr[0].length === 1) {
+    //       month = `0${splitArr[0]}`;
+    //     } else {
+    //       month = `${splitArr[0]}`;
+    //     }
+    //     if (splitArr[1].length === 1) {
+    //       day = `0${splitArr[1]}`;
+    //     } else {
+    //       day = `${splitArr[1]}`;
+    //     }
+    //     let finalDate = `${splitArr[2]}-${month}-${day}`;
+    //     return finalDate;
+    //   }
+    //   const finalArr = arr.map((day) => formatDate(day));
+    //   console.log(this.$store.state.allDays)
+    //   let id = this.$store.state.user.id
+    //   let newArr = []
+    //   for (let i=0; i<finalArr.length; i++){
+    //     const result = this.$store.state.allDays.filter(day => day.user_id===id && day.date===finalArr[i])
+    //     console.log(result, result.length)
+    //     if (result.length === 0){
+    //       newArr.push(0)
+    //     }else{
+    //       let totalCarbs = result[0].food_list.reduce(function (accumulator, food) {
+    //         return accumulator + food.carbs;
+    //       }, 0);
+    //       newArr.push(totalCarbs)
+    //     }
+    //   }
+    //   return(newArr);
+    // },
+    // weekData(){
+    //   console.log('hello')
+    //   return {
+    //     labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    //     datasets: [
+    //       {
+    //         // data: [this.week[0].toFixed(1), this.week[1].toFixed(1), this.week[2].toFixed(1), this.week[3].toFixed(1), this.week[4].toFixed(1), this.week[5].toFixed(1), this.week[6].toFixed(1)],
+    //         data: [34.2, 34.4, 56.5, 32.52313123, 45.5, 65.532434, 32.3535363],
+    //         backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED', '#77CEFF', '#0079AF'],
+    //       },
+    //     ],
+    //   }
+    // },
+  },
+  methods:{
+    async getAllDays(){
+      const res = await axios.get(`http://127.0.0.1:8000/days`)
+      let allDays = res.data
+      // axios
+      // .get(`http://127.0.0.1:8000/days`)
+      // .then(response => {
+      //   console.log(response)
+      //   this.$store.commit('setAllDays', response.data)
+      // })
       let date = this.date
       let arr = [];
       date.setDate(date.getDate() - date.getDay());
@@ -198,9 +268,34 @@ export default {
         return finalDate;
       }
       const finalArr = arr.map((day) => formatDate(day));
-      return(finalArr);
+      // console.log(this.$store.state.allDays)
+      let id = this.$store.state.user.id
+      let newArr = []
+      for (let i=0; i<finalArr.length; i++){
+        const result = allDays.filter(day => day.user_id===id && day.date===finalArr[i])
+        console.log(result, result.length)
+        if (result.length === 0){
+          newArr.push(0)
+        }else{
+          let totalCarbs = result[0].food_list.reduce(function (accumulator, food) {
+            return accumulator + food.carbs;
+          }, 0);
+          newArr.push(totalCarbs)
+        }
+      }
+      console.log('NEWARR:', newArr)
+      this.weekData = {
+        labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        datasets: [
+          {
+            data: [newArr[0].toFixed(1), newArr[1].toFixed(1), newArr[2].toFixed(1), newArr[3].toFixed(1), newArr[4].toFixed(1), newArr[5].toFixed(1), newArr[6].toFixed(1)],
+            // data: [34.2, 34.4, 56.5, 32.52313123, 45.5, 65.532434, 32.3535363],
+            backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED', '#77CEFF', '#0079AF'],
+          },
+        ],
+      }
     }
-  },
+  }
 }
 </script>
 
