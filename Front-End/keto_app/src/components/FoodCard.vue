@@ -156,7 +156,7 @@ export default {
 .label{
   /* works but sucks: */
   position: fixed;
-  right: 37vw;
+  right: 29vw;
 }
 .lds-ring {
   display: inline-block;
