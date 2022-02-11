@@ -52,6 +52,12 @@ export default {
       if (this.$store.state.profile.activ === 'low'){
         this.color = "red"
         return "Not Very Active"
+      } else if (this.$store.state.profile.activ === 'med'){
+        this.color = "blue"
+        return "Moderately Active"
+      } else {
+        this.color = "gold"
+        return "Very Active"
       }
     }
   },
@@ -142,6 +148,6 @@ export default {
   background-color: #3181CE;
 }
 .gold{
-  background-color: rgb(173, 152, 31)
+  background-color: rgb(224, 198, 46)
 }
 </style>
