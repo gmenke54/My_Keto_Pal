@@ -33,7 +33,8 @@ export default createStore({
     curCarbs: 0.0,
     curSugar: 0.0,
     curFat: 0.0,
-    allDays: null
+    allDays: null,
+    feed: []
   },
   mutations: {
     initializeStore(state) {
@@ -80,6 +81,9 @@ export default createStore({
     },
     setAllDays(state, payload) {
       state.allDays = payload;
+    },
+    setFeed(state, payload) {
+      state.feed = payload;
     }
   },
   actions: {
@@ -96,6 +100,13 @@ export default createStore({
         );
         state.commit('setProfile', resp.data);
       } catch {}
+    },
+    async getFeed(state) {
+      const posts = await axios.get('http://127.0.0.1:8000/posts');
+      // const recipes = await axios.get('http://127.0.0.1:8000/recipes');
+      // console.log(posts.data, recipes.data);
+      // let feed = concat(posts.data, recipes.data);
+      state.commit('setFeed', posts.data);
     }
   },
   modules: {}

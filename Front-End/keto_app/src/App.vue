@@ -2,7 +2,9 @@
   <div>
     <div class="nav">
       <router-link v-if="this.$store.state.isAuthenticated" to="/">myketopal</router-link>
+      <router-link v-if="this.$store.state.isAuthenticated" to="/feed">Feed</router-link>
       <router-link v-if="this.$store.state.isAuthenticated" to="/profile">Profile</router-link>
+      <router-link to="/about">About</router-link>
       <router-link v-if="this.$store.state.isAuthenticated === false" to="/signup">Sign Up</router-link> 
       <router-link v-if="this.$store.state.isAuthenticated === false" to="/signin">Login</router-link>
       <div v-if="this.$store.state.isAuthenticated" class="a" @click="logout">Logout</div>
@@ -25,6 +27,7 @@ export default {
       axios.defaults.headers.common['Authorization'] = ''
     }
     this.$store.dispatch('setUserId')
+    this.$store.dispatch('getFeed')
   },
   methods: {
     logout(){

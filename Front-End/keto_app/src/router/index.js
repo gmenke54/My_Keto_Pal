@@ -3,6 +3,8 @@ import Home from '../views/Home.vue';
 import Signin from '../views/Signin.vue';
 import Signup from '../views/Signup.vue';
 import Profile from '../views/Profile.vue';
+import Feed from '../views/Feed.vue';
+import About from '../views/About.vue';
 
 const routes = [
   {
@@ -24,6 +26,16 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: Signin
+  },
+  {
+    path: '/feed',
+    name: 'Feed',
+    component: Feed
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
   }
 ];
 
