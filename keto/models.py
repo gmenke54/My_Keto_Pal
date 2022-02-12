@@ -103,7 +103,7 @@ class Post(models.Model):
     type = models.CharField(default="post", max_length=100)
 
     def __str__(self):
-        return self.text
+        return str(self.pk)
 
 
 class Comment(models.Model):

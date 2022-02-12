@@ -44,7 +44,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ('type', 'comments', 'profile', 'text', 'img', 'link', )
+        fields = ('id', 'type', 'comments', 'profile', 'text', 'img', 'link',)
 
 
 class DaySerializer(serializers.ModelSerializer):
