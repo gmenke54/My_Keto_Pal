@@ -94,9 +94,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         read_only=True
     )
 
-    # profile_url = serializers.ModelSerializer.serializer_url_field(
-    #     view_name='profile_detail'
-    # )
+    profile_url = serializers.ModelSerializer.serializer_url_field(
+        view_name='profile_detail'
+    )
 
     user_id = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.all(),
@@ -105,5 +105,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('days', 'user', 'user_id', 'cur_weight',
-                  'goal_weight', 'img', 'keto_weeks', 'name', 'age', 'activ', 'my_recipes', 'my_posts', 'my_comments', 'daily_carb', 'daily_fat', 'daily_sugar', 'created_at')
+        fields = ('days', 'user', 'user_id', 'cur_weight', 'profile_url', 'goal_weight', 'img', 'keto_weeks', 'name',
+                  'age', 'activ', 'my_recipes', 'my_posts', 'my_comments', 'daily_carb', 'daily_fat', 'daily_sugar', 'created_at')
