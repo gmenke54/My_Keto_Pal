@@ -1,3 +1,4 @@
+from unicodedata import decimal
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
@@ -28,6 +29,7 @@ class Profile(models.Model):
     daily_carb = models.FloatField(default=30.0)
     daily_fat = models.FloatField(default=150.0)
     daily_sugar = models.FloatField(default=10.0)
+    decimals = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.user.username)
