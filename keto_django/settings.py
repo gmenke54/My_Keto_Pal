@@ -37,8 +37,9 @@ REST_FRAMEWORK = {
 }
 
 # reset this to ne just the deployed frontend later:
-# CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080', 'http://localhost:8080']
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:8080', 'http://localhost:8080',
+                        'http://myketopal.surge.sh', ]
+# CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 SECURE_SSL_REDIRECT = os.environ['MODE'] == 'prod'
 

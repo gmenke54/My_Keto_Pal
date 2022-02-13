@@ -16,6 +16,8 @@ class Profile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
+    import datetime
+    created_at = models.DateField(("Date"), default=datetime.date.today)
     cur_weight = models.FloatField(null=True)
     goal_weight = models.FloatField(null=True)
     img = models.TextField(null=True)
