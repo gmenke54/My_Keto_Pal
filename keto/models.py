@@ -11,9 +11,6 @@ class User(AbstractUser):
 class Profile(models.Model):
     user = models.OneToOneField(
         User,
-        # from stackoverflow: https://stackoverflow.com/questions/26188997/django-model-onetoonefield-without-creating-additional-id-database-column
-        # to_field='id',
-        # related_name='profile',
         on_delete=models.CASCADE,
         primary_key=True,
     )
